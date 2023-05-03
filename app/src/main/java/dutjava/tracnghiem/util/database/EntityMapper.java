@@ -3,34 +3,35 @@ package dutjava.tracnghiem.util.database;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-
-import dutjava.tracnghiem.model.utils.Entity;
-import dutjava.tracnghiem.model.utils.SqlTypeMapper;
-import dutjava.tracnghiem.util.dependency_injection.Inject;
+import java.util.Optional;
 
 public class EntityMapper<T> {
-    @Inject
     private ITypeMapper typeMapper;
+    private Optional<Class<?>> classData;
 
-    @Inject
-    private Class<T> classData;
+    public Optional<Type> primaryField;
+
+    public void setClass(Class<?> classData) {
+        this.classData = Optional.of(classData);
+    }
+
+    public void setTypeMapper(ITypeMapper mapper) {
+        this.typeMapper = mapper;
+    }
 
     public ArrayList<Type> getTableSchema() {
         ArrayList<Type> table = new ArrayList<>();
-        for (Field field : classData.getDeclaredFields()) {
+        for (Field field : classData.get().getDeclaredFields()) {
             if(field.isAnnotationPresent(Entity.class)) {
                 // DO SOME RELATIONSHIP THING HERE
                 continue;
             }
-            String fieldName = field.getName();
-            String fieldProperty = SqlTypeMapper.GetSQLType(field.getType().getName());
+            Type type = typeMapper.getType(field);
             if(field.isAnnotationPresent(Primary.class))
-                fieldProperty += " PRIMARY KEY";
-            Type type = new Type();
-            type.TypeName = fieldName;
-            type.TypeProp = fieldProperty;
-            type.origin = field.getType();
+                type.TypeProp += " PRIMARY KEY";
             table.add(type);
+            if(type.isPrimary())
+                primaryField = Optional.of(type);
         }
         return table;
     }
@@ -39,21 +40,23 @@ public class EntityMapper<T> {
         ArrayList<Type> schema = getTableSchema();
         ArrayList<Object> args = new ArrayList<>();
 
-        for(int i = 0; i < classData.getDeclaredFields().length; i++)
+        for(int i = 0; i < classData.get().getDeclaredFields().length; i++)
             args.add(typeMapper.getValue(schema.get(i), records.get(i)));
-        Constructor<?>[] constructors = classData.getDeclaredConstructors();
+        Constructor<?>[] constructors = classData.get().getDeclaredConstructors();
         for(Constructor<?> con : constructors) {
             try {
-                T t = (T) con.newInstance(args);
+                T t = (T) con.newInstance(args.toArray());
                 return t;
-            } catch(Exception e) {}
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
 
     public ArrayList<String> toRecord(T object) {
         ArrayList<String> record = new ArrayList<>();
-        for(Field field : classData.getDeclaredFields())
+        for(Field field : classData.get().getDeclaredFields())
             try {
                 field.setAccessible(true);
                 record.add(field.get(object).toString());

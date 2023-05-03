@@ -3,15 +3,24 @@ package dutjava.tracnghiem.util.dependency_injection;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 
 public class HostBuilder {
     private Host host = new HostImpl();
     private HashMap<Class<?>, Object> registerContainer = new HashMap<>();
 
+    private List<Class<?>> clazzes;
+
     private HashMap<Class<?>, Class<?>> interfaceMapper = new HashMap<>();
 
-    public HostBuilder add(Class<?> typeClass, Object keyObject) {
-        registerContainer.put(typeClass, keyObject);
+    public HostBuilder add(Class<?> typeClass, Object key) {
+        registerContainer.put(typeClass, key);
+        return this;
+    }
+
+    public HostBuilder addClass(Class<?> clazz, Object key) {
+        host.registerClass(key, clazz);
+        clazzes.add(clazz);
         return this;
     }
 
@@ -26,9 +35,9 @@ public class HostBuilder {
             System.out.println("Constructed " + typeClass.getName());
             for(Field field : typeClass.getDeclaredFields()) {
                 // System.out.println(field.getName());
+                field.setAccessible(true);
                 if(!field.isAnnotationPresent(Inject.class))
                     continue;
-                field.setAccessible(true);
                 Class<?> classField = field.getType();
                 if(interfaceMapper.containsKey(classField))
                     classField = interfaceMapper.get(classField);

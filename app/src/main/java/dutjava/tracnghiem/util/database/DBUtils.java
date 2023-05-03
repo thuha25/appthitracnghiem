@@ -1,4 +1,4 @@
-package dutjava.tracnghiem.model.utils;
+package dutjava.tracnghiem.util.database;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;

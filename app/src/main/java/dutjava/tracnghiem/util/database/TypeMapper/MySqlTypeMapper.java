@@ -15,8 +15,8 @@ interface TypeParser<T> {
 }
 
 public class MySqlTypeMapper implements ITypeMapper {
-    HashMap<Class<?>, String> table = new HashMap<>();
-    HashMap<Class<?>, TypeParser<?>> parsers = new HashMap<>();
+    private HashMap<Class<?>, String> table = new HashMap<>();
+    private HashMap<Class<?>, TypeParser<?>> parsers = new HashMap<>();
 
     public MySqlTypeMapper() {
         table.put(int.class, "INTEGER");
@@ -27,6 +27,8 @@ public class MySqlTypeMapper implements ITypeMapper {
         table.put(float.class, "FLOAT");
         table.put(Float.class, "FLOAT");
         table.put(Date.class, "DATETIME");
+        table.put(boolean.class, "TINYINT");
+        table.put(Boolean.class, "TINYINT");
 
         parsers.put(int.class, new TypeParser<Integer>() {
             @Override
@@ -79,6 +81,18 @@ public class MySqlTypeMapper implements ITypeMapper {
                     e.printStackTrace();
                 }
                 return null;
+            }
+        });
+        parsers.put(boolean.class, new TypeParser<Boolean>() {
+            @Override
+            public Boolean parse(String s) {
+                return s.equals("1");
+            }
+        });
+        parsers.put(Boolean.class, new TypeParser<Boolean>() {
+            @Override
+            public Boolean parse(String s) {
+                return s.equals("1");
             }
         });
     }

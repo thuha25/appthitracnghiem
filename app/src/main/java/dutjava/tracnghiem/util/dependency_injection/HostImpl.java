@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 class HostImpl implements Host {
     private HashMap<Object, Object> container = new HashMap<>();
+    private HashMap<Object, Class<?>> classDataContainer = new HashMap<>();
 
     @Override
     @SuppressWarnings("unchecked")
@@ -21,5 +22,15 @@ class HostImpl implements Host {
     @Override
     public void register(Object key, Object object) {
         container.put(key, object);
+    }
+
+    @Override
+    public Class<?> getClass(Object key) {
+        return classDataContainer.get(key);
+    }
+
+    @Override
+    public void registerClass(Object key, Class<?> clazz) {
+        classDataContainer.put(key, clazz);
     }
 }
