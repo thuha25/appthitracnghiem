@@ -4,6 +4,9 @@
 package dutjava.tracnghiem;
 
 import dutjava.tracnghiem.model.repository.AnswerRepository;
+import dutjava.tracnghiem.view.MultipleChoicePage;
+
+import java.awt.*;
 
 public class App {
     public static void main(String[] args) {
@@ -11,6 +14,8 @@ public class App {
         // DBUtils.instance.executeQuery("SELECT * FROM student");
 
         // System.out.println(A.class.getInterfaces()[0].getInterfaces()[0].getName());
-        AnswerRepository a = new AnswerRepository();
+//        AnswerRepository a = new AnswerRepository();
+        Frame mcp = new MultipleChoicePage();
+
     }
 }
