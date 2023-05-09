@@ -1,5 +1,9 @@
 package dutjava.tracnghiem.util.database;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -21,18 +25,63 @@ public class CrudRepository<TEntity, TPrimary> extends Repository<TEntity, TPrim
             return Optional.empty();
         return Optional.of(entities.get(0));
     }
-    public void save(TEntity entity) {
 
+    private int next_increament_id() {
+        File f = new File("./" + EntityClass.getSimpleName());
+        if(!f.exists() || f.isDirectory()) {
+            try {
+                f.createNewFile();
+                FileOutputStream fou = new FileOutputStream(f);
+                fou.write(0);
+                fou.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return 0;
+        }
+        int id = 0;
+        try(FileInputStream fin = new FileInputStream(f)) {
+            id = fin.read() + 1;
+            FileOutputStream fou = new FileOutputStream(f);
+            fou.write(id);
+            fou.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    public TEntity save(TEntity entity) {
+        Optional<TEntity> oentity = findById(getPrimaryValue(entity));
+        if(oentity.isEmpty()) {
+            ArrayList<String> record = mapper.toRecord(entity);
+            if(PrimaryClass == int.class || PrimaryClass == Integer.class) {
+                int id = next_increament_id();
+                record.set(0, String.valueOf(id));
+                setPrimaryValue(entity, id);
+            } else {
+                throw new RuntimeException("@Primary field must be Integer (for now)");
+            }
+            customQuery("INSERT INTO " + tableName + " VALUES (" +
+            String.join(",", record.stream().map(e -> "'" + e + "'").toList())    
+            + ")");
+            return entity;
+        }
+        // Perform update
+
+        return oentity.get();
     }
     public void delete(TEntity entity) {
-
+        deleteById(getPrimaryValue(entity));
     }
     public void deleteById(TPrimary id) {
-
+        customQuery("DELETE FROM " + tableName + " WHERE " + mapper.primaryField.get().TypeName + "=" + id);
     }
-    private Collection<TEntity> customQuery(String query) {
-        if(!DBUtils.instance.testQuery(query))
-            DBUtils.instance.executeUpdate(query);
+    protected Collection<TEntity> customQuery(String query) {
+        if(!DBUtils.instance.testQuery(query)) {
+            // DBUtils.instance.executeUpdate(query);
+            return null;
+        }
         ResultSet result = DBUtils.instance.executeQuery(query);
         if(result == null)
             return null;

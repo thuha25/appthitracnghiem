@@ -3,6 +3,7 @@ package dutjava.tracnghiem.util.database;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 public class EntityMapper<T> {
@@ -22,13 +23,36 @@ public class EntityMapper<T> {
     public ArrayList<Type> getTableSchema() {
         ArrayList<Type> table = new ArrayList<>();
         for (Field field : classData.get().getDeclaredFields()) {
-            if(field.isAnnotationPresent(Entity.class)) {
+            if(field.isAnnotationPresent(OneToOne.class)) {
+                
+                // DO SOME RELATIONSHIP THING HERE
+                continue;
+            }
+            if(field.isAnnotationPresent(OneToMany.class)) {
+                if(!Collection.class.isAssignableFrom(field.getType()))
+                    throw new RuntimeException("@OneToMany property must be Collection<T>");
+                
+                // DO SOME RELATIONSHIP THING HERE
+                continue;
+            }
+            if(field.isAnnotationPresent(ManyToMany.class)) {
+                if(!Collection.class.isAssignableFrom(field.getType()))
+                    throw new RuntimeException("@OneToMany property must be Collection<T>");
+                // DO SOME RELATIONSHIP THING HERE
+                continue;
+            }
+            if(field.isAnnotationPresent(ManyToOne.class)) {
+                
                 // DO SOME RELATIONSHIP THING HERE
                 continue;
             }
             Type type = typeMapper.getType(field);
+            if(type == null)
+                throw new RuntimeException("Field " + field.getName() + " with types " + field.getClass().getName() + " cannot be mapped!");
             if(field.isAnnotationPresent(Primary.class))
                 type.TypeProp += " PRIMARY KEY";
+            if(field.isAnnotationPresent(AutoIncrement.class))
+                type.TypeProp += " AUTO_INCREMENT";
             table.add(type);
             if(type.isPrimary())
                 primaryField = Optional.of(type);

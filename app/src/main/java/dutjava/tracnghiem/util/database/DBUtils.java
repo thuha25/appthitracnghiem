@@ -63,11 +63,11 @@ public class DBUtils {
         if(connection == null)
             connection = getConnection();
         try {
-            System.out.println("Executing update query: " + query);
+            System.out.println("Executing query: " + query);
             ResultSet result = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery(query);
             return result;
         } catch(Exception e) {
-            System.out.println("Failed to execute query " + query);
+            System.out.println("Failed to query " + query);
             e.printStackTrace();
         }
         return null;
@@ -78,6 +78,7 @@ public class DBUtils {
             connection = getConnection();
         try {
             Statement statement = connection.createStatement();
+            System.out.println("Executing: " + query);
             return statement.execute(query);
         } catch(Exception e) {
             e.printStackTrace();

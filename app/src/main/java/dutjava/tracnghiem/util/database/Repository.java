@@ -1,11 +1,8 @@
 package dutjava.tracnghiem.util.database;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Optional;
 
 import dutjava.tracnghiem.util.database.TypeMapper.MySqlTypeMapper;
-import dutjava.tracnghiem.util.dependency_injection.Inject;
 
 public class Repository<TEntity, TPrimary> {
 
@@ -32,5 +29,35 @@ public class Repository<TEntity, TPrimary> {
         String query = "CREATE TABLE IF NOT EXISTS " + this.tableName + "("
             + String.join(",", schema.stream().map(e -> e.TypeName + " " + e.TypeProp).toList()) + ")";
         DBUtils.instance.executeUpdate(query);
+    }
+
+    protected TPrimary getPrimaryValue(TEntity entity) {
+        try {
+            mapper.primaryField.get().origin.setAccessible(true);
+            TPrimary ret = (TPrimary) mapper.primaryField.get().origin.get(entity);
+            mapper.primaryField.get().origin.setAccessible(false);
+            return ret;
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    protected void setPrimaryValue(TEntity entity, Integer value) {
+        try {
+            mapper.primaryField.get().origin.setAccessible(true);
+            mapper.primaryField.get().origin.set(entity, value);
+            mapper.primaryField.get().origin.setAccessible(false);
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }

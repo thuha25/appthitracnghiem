@@ -104,13 +104,13 @@ public class MySqlTypeMapper implements ITypeMapper {
         Type type = new Type();
         type.TypeName = field.getName();
         type.TypeProp = table.get(field.getType());
-        type.origin = field.getType();
+        type.origin = field;
         return type;
     }
 
     @Override
     public Object getValue(Type type, String value) {
-        return parsers.get(type.origin).parse(value);
+        return parsers.get(type.origin.getType()).parse(value);
     }
 
 }
