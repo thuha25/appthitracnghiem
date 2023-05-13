@@ -1,5 +1,7 @@
 package dutjava.tracnghiem.view.panel;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,6 +12,7 @@ import javax.swing.JRadioButton;
 
 import dutjava.tracnghiem.model.model.AnswerModel;
 import dutjava.tracnghiem.model.model.QuestionModel;
+import dutjava.tracnghiem.view.design.Size;
 
 class ChoiceRadioButton extends JRadioButton {
     private int id;
@@ -70,6 +73,8 @@ public class QuestionPanel extends JPanel {
 
     private void init() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setPreferredSize(new Dimension(Size.QUESTION_PANEL_WIDTH, Size.QUESTION_PANEL_HEIGHT))
+        ;
         descL = new JLabel(question.getQuestionDescription());
         choicePanel = buildChoicePanel();
         this.add(descL);

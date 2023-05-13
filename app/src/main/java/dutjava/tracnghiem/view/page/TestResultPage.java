@@ -2,6 +2,7 @@ package dutjava.tracnghiem.view.page;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -92,7 +93,7 @@ public class TestResultPage extends JFrame {
         this.setTitle("Result");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(Size.RESULT_PAGE_WIDTH, Size.RESULT_PAGE_HEIGHT);
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20)); 
 
         calculateScore();
 
@@ -110,7 +111,7 @@ public class TestResultPage extends JFrame {
         });
         this.add(topPanel, Component.CENTER_ALIGNMENT);
         this.add(scrollPane, Component.CENTER_ALIGNMENT);
-        this.add(okButton, Component.CENTER_ALIGNMENT);
+        this.add(okButton,Component.CENTER_ALIGNMENT);
     }
 
     private void close() {
