@@ -1,5 +1,6 @@
 package dutjava.tracnghiem.view.panel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,9 +21,11 @@ public class TestSelectPanel extends JPanel {
     private void init() {
         testNameL = new JLabel(test.getName());
         testNameL.setPreferredSize( new Dimension(275, 50));
-        takeTestButton = new JButton("Take test");
-
+        takeTestButton = new JButton("Join");
+        this.setBackground(Color.white);
+        
         this.add(testNameL);
+        
         this.add(takeTestButton);
     }
 
