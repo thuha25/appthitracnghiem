@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.sql.Connection;
 
 public class DBUtils {
-    private String URL = "jdbc:mysql://localhost:3306/data";
+    private String URL = "jdbc:mysql://localhost:3306/quiz";
     private String username = "#";
     private String password = "#";
     private Connection connection = null;

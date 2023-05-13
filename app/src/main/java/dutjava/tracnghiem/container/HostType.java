@@ -1,5 +1,6 @@
 package dutjava.tracnghiem.container;
 
+
 public enum HostType {
     AnswerRepository,
     QuestionRepository,
@@ -8,5 +9,7 @@ public enum HostType {
     TestQuestionsRepository,
     AnswerService,
     QuestionService,
-    TestService
+    TestService,
+    QuizPage,
+    TestListPage
 }

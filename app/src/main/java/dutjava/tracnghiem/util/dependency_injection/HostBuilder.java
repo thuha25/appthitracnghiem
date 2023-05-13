@@ -2,6 +2,7 @@ package dutjava.tracnghiem.util.dependency_injection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,9 +29,7 @@ public class HostBuilder {
         try {
             Class.forName(typeClass.getName());
             Constructor<?> constructor = typeClass.getDeclaredConstructor();
-            constructor.setAccessible(true);
             Object object = constructor.newInstance();
-            constructor.setAccessible(false);
             host.register(keyObject, object);
             System.out.println("Constructed " + typeClass.getName());
             for(Field field : typeClass.getDeclaredFields()) {
@@ -49,6 +48,9 @@ public class HostBuilder {
                 field.set(host.get(keyObject), host.get(fieldKey));
                 field.setAccessible(false);
             }
+        } catch(InvocationTargetException e) {
+            System.out.println(e.getMessage()); 
+            e.printStackTrace();
         } catch(Exception e) {
             e.printStackTrace();
         }

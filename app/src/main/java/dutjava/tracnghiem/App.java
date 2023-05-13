@@ -3,17 +3,12 @@
  */
 package dutjava.tracnghiem;
 
-import java.util.List;
-
 import dutjava.tracnghiem.container.AppHost;
 import dutjava.tracnghiem.container.HostType;
-import dutjava.tracnghiem.model.model.AnswerModel;
-import dutjava.tracnghiem.model.model.QuestionModel;
 import dutjava.tracnghiem.model.model.TestModel;
-import dutjava.tracnghiem.model.service.IAnswerService;
-import dutjava.tracnghiem.model.service.IQuestionService;
 import dutjava.tracnghiem.model.service.ITestService;
 import dutjava.tracnghiem.util.database.DBUtils;
+import dutjava.tracnghiem.view.page.TestListPage;
 
 public class App {
     public static void main(String[] args) {
@@ -22,7 +17,7 @@ public class App {
 
         // System.out.println(A.class.getInterfaces()[0].getInterfaces()[0].getName());
         ITestService service = AppHost.host.get(HostType.TestService);
-        TestModel model = service.getById(1).get();
+        // TestModel model = service.getById(2).get();
         // = service.save(new TestModel("Test", "Test", List.of(
         //     new QuestionModel("Question test 1", 10, List.of(
         //         new AnswerModel("a", false),
@@ -40,12 +35,16 @@ public class App {
         //         new AnswerModel("c", true)
         //     ))
         // ))).get();
-        System.out.println("Test: " + model.getName() + " - " + model.getDescription());
-        System.out.println(model.getQuestions().size());
-        for(QuestionModel question : model.getQuestions()) {
-            System.out.println(question.getQuestionDescription() + ":");
-            for(AnswerModel answer : question.getAnswers())
-                System.out.println(answer.getAnswer() + " " + answer.isCorrect());
-        }
+        // System.out.println("Test: " + model.getName() + " - " + model.getDescription());
+        // System.out.println(model.getQuestions().size());
+        // for(QuestionModel question : model.getQuestions()) {
+        //     System.out.println(question.getQuestionDescription() + ":");
+        //     for(AnswerModel answer : question.getAnswers())
+        //         System.out.println(answer.getAnswer() + " " + answer.isCorrect());
+        // }
+
+        TestListPage form = AppHost.host.get(HostType.TestListPage);
+        form.lateInit();
+        form.setVisible(true);
     }
 }

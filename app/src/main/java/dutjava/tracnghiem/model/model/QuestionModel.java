@@ -39,4 +39,11 @@ public class QuestionModel {
     public void setAnswers(List<AnswerModel> answers) {
         this.answers = answers;
     }
+
+    public AnswerModel getCorrectAnswer() {
+        for(AnswerModel answer : answers)
+            if(answer.isCorrect())
+                return answer;
+        return null;
+    }
 }
