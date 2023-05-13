@@ -11,5 +11,6 @@ public enum HostType {
     QuestionService,
     TestService,
     QuizPage,
-    TestListPage
+    TestListPage,
+    AdminPage
 }

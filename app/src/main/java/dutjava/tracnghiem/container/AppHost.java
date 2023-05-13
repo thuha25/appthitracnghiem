@@ -10,6 +10,7 @@ import dutjava.tracnghiem.model.service.implement.QuestionService;
 import dutjava.tracnghiem.model.service.implement.TestService;
 import dutjava.tracnghiem.util.dependency_injection.Host;
 import dutjava.tracnghiem.util.dependency_injection.HostBuilder;
+import dutjava.tracnghiem.view.page.AdminPage;
 import dutjava.tracnghiem.view.page.QuizPage;
 import dutjava.tracnghiem.view.page.TestListPage;
 
@@ -25,5 +26,6 @@ public class AppHost {
     .add(TestService.class, HostType.TestService)
     .add(QuizPage.class, HostType.QuizPage)
     .add(TestListPage.class, HostType.TestListPage)
+    .add(AdminPage.class, HostType.AdminPage)
     .build();
 }

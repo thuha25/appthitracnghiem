@@ -8,6 +8,7 @@ import dutjava.tracnghiem.container.HostType;
 import dutjava.tracnghiem.model.model.TestModel;
 import dutjava.tracnghiem.model.service.ITestService;
 import dutjava.tracnghiem.util.database.DBUtils;
+import dutjava.tracnghiem.view.page.AdminPage;
 import dutjava.tracnghiem.view.page.TestListPage;
 
 public class App {
@@ -43,7 +44,11 @@ public class App {
         //         System.out.println(answer.getAnswer() + " " + answer.isCorrect());
         // }
 
-        TestListPage form = AppHost.host.get(HostType.TestListPage);
+        // TestListPage form = AppHost.host.get(HostType.TestListPage);
+        // form.lateInit();
+        // form.setVisible(true);
+
+        AdminPage form = AppHost.host.get(HostType.AdminPage);
         form.lateInit();
         form.setVisible(true);
     }

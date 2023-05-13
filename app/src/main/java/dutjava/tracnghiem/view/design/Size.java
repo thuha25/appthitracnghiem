@@ -12,4 +12,7 @@ public class Size {
 
     public static int RESULT_PAGE_WIDTH = 500;
     public static int RESULT_PAGE_HEIGHT = 720;
+
+    public static int ADMIN_PAGE_WIDTH = 1280;
+    public static int ADMIN_PAGE_HEIGHT = 720;
 }
