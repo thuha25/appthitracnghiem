@@ -17,7 +17,7 @@ import dutjava.tracnghiem.view.page.TestListPage;
 
 public class App {
     public static void main(String[] args) {
-        DBUtils.instance.SetUsernamePassword("root", "danghuynh");
+        DBUtils.instance.SetUsernamePassword("root", "ComTMM0112");
         // DBUtils.instance.executeQuery("SELECT * FROM student");
         // System.out.println(A.class.getInterfaces()[0].getInterfaces()[0].getName());
         ITestService service = AppHost.host.get(HostType.TestService);
@@ -45,12 +45,12 @@ public class App {
         // System.out.println(answer.getAnswer() + " " + answer.isCorrect());
         // }
 
-        // TestListPage form = AppHost.host.get(HostType.TestListPage);
-        // form.lateInit();
-        // form.setVisible(true);
-
-        AdminPage form = AppHost.host.get(HostType.AdminPage);
+        TestListPage form = AppHost.host.get(HostType.TestListPage);
         form.lateInit();
         form.setVisible(true);
+
+        // AdminPage form = AppHost.host.get(HostType.AdminPage);
+        // form.lateInit();
+        // form.setVisible(true);
     }
 }

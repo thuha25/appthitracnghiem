@@ -64,7 +64,7 @@ public class AdminPage extends JFrame {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AdminQuestionPage questionPage = new AdminQuestionPage();
+                AdminTestPage questionPage = new AdminTestPage();
                 questionPage.setCallback(test -> {
                     if(test != null)
                         testService.save(test);
@@ -80,7 +80,7 @@ public class AdminPage extends JFrame {
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AdminQuestionPage questionPage = new AdminQuestionPage(testService.getAll().get(testTable.getSelectedRow()));
+                AdminTestPage questionPage = new AdminTestPage(testService.getAll().get(testTable.getSelectedRow()));
                 questionPage.setCallback(test -> {
                     if(test != null)
                         testService.save(test);

@@ -13,11 +13,10 @@ public class Size {
     public static int RESULT_PAGE_WIDTH = 500;
     public static int RESULT_PAGE_HEIGHT = 720;
 
-<<<<<<< HEAD
+
     public static int ADMIN_PAGE_WIDTH = 1280;
     public static int ADMIN_PAGE_HEIGHT = 720;
-=======
+
     public static int QUESTION_PANEL_WIDTH = 100;
     public static int QUESTION_PANEL_HEIGHT = 100;
->>>>>>> 57985e96676e12efe21d2a586f73880cb8843df4
 }
