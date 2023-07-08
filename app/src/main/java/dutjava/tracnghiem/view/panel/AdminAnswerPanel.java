@@ -45,6 +45,7 @@ public class AdminAnswerPanel extends JPanel {
         });
 
         this.isCorrectButton = new JRadioButton();
+        this.isCorrectButton.setSelected(answer.isCorrect());
         this.isCorrectButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {

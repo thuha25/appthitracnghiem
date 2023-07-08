@@ -13,15 +13,9 @@ public class Size {
     public static int RESULT_PAGE_WIDTH = 500;
     public static int RESULT_PAGE_HEIGHT = 720;
 
-<<<<<<< Updated upstream
-
     public static int ADMIN_PAGE_WIDTH = 1280;
     public static int ADMIN_PAGE_HEIGHT = 720;
 
-=======
-    public static int ADMIN_PAGE_WIDTH = 1280;
-    public static int ADMIN_PAGE_HEIGHT = 720;
->>>>>>> Stashed changes
     public static int QUESTION_PANEL_WIDTH = 100;
     public static int QUESTION_PANEL_HEIGHT = 100;
 }
